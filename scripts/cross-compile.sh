@@ -11,36 +11,36 @@ cd "$PATH_SCRIPT/../"
 
 
 
-OS="linux"
+OS="Linux"
 
 ARCH="32"
 echo "Compiling... (OS: $OS, Arch: $ARCH)"
-GOOS=linux GOARCH=386 go build -o "${PATH_BUILD}/${OS}/${BASE_NAME}_${ARCH}"
+GOOS=linux GOARCH=386 go build -o "${PATH_BUILD}/${OS}${ARCH}_${BASE_NAME}"
 
 ARCH="64"
 echo "Compiling... (OS: $OS, Arch: $ARCH)"
-GOOS=linux GOARCH=amd64 go build -o "${PATH_BUILD}/${OS}/${BASE_NAME}_${ARCH}"
+GOOS=linux GOARCH=amd64 go build -o "${PATH_BUILD}/${OS}${ARCH}_${BASE_NAME}"
 
 
 
-OS="windows"
+OS="Windows"
 
 ARCH="32"
 echo "Compiling... (OS: $OS, Arch: $ARCH)"
-GOOS=windows GOARCH=386 go build -o "${PATH_BUILD}/${OS}/${BASE_NAME}_${ARCH}.exe"
+GOOS=windows GOARCH=386 go build -o "${PATH_BUILD}/${OS}${ARCH}_${BASE_NAME}.exe"
 
 ARCH="64"
 echo "Compiling... (OS: $OS, Arch: $ARCH)"
-GOOS=windows GOARCH=amd64 go build -o "${PATH_BUILD}/${OS}/${BASE_NAME}_${ARCH}.exe"
+GOOS=windows GOARCH=amd64 go build -o "${PATH_BUILD}/${OS}${ARCH}_${BASE_NAME}.exe"
 
 
 
-OS="mac"
+OS="Mac"
 
 ARCH="32"
 echo "Compiling... (OS: $OS, Arch: $ARCH)"
-GOOS=darwin GOARCH=386 go build -o "${PATH_BUILD}/${OS}/${BASE_NAME}_${ARCH}"
+GOOS=darwin GOARCH=386 go build -o "${PATH_BUILD}/${OS}${ARCH}_${BASE_NAME}"
 
 ARCH="64"
 echo "Compiling... (OS: $OS, Arch: $ARCH)"
-GOOS=darwin GOARCH=amd64 go build -o "${PATH_BUILD}/${OS}/${BASE_NAME}_${ARCH}"
+GOOS=darwin GOARCH=amd64 go build -o "${PATH_BUILD}/${OS}${ARCH}_${BASE_NAME}"
