@@ -29,26 +29,61 @@ var (
 	templateContent    []byte
 	templateTokens     map[int][]byte
 	outFileNameTokens  map[string]outFileNameTokenInfo
-	outFileNameCounter int = 1
+	outFileNameCounter int = 0
 )
 
 func Main() error {
-	err := parseTemplateFile()
+	err := validateInputs()
 	if err != nil {
-		fmt.Println(err)
+		return err
+	}
+
+	err = parseTemplateFile()
+	if err != nil {
+		return err
 	}
 
 	err = parseOutFileName()
 	if err != nil {
-		fmt.Println(err)
+		return err
 	}
 
 	err = processExcelFile()
 	if err != nil {
-		fmt.Println(err)
+		return err
 	}
 
 	return nil
+}
+
+func validateInputs() error {
+	var errs []string
+
+	err := TemplateFile.Init()
+	if err != nil {
+		errs = append(errs, err.Error())
+	}
+
+	err = OutDir.Init()
+	if err != nil {
+		errs = append(errs, err.Error())
+	}
+
+	err = OutFileName.Init()
+	if err != nil {
+		errs = append(errs, err.Error())
+	}
+
+	err = DataFile.Init()
+	if err != nil {
+		errs = append(errs, err.Error())
+	}
+
+	if len(errs) > 0 {
+		return fmt.Errorf(strings.Join(errs, "\n"))
+	} else {
+		return nil
+	}
 }
 
 func parseTemplateFile() error {
