@@ -3,6 +3,8 @@ package prog
 import (
 	"errors"
 	"flag"
+	"fmt"
+	"os"
 )
 
 type modeType struct {
@@ -26,6 +28,7 @@ type dataFileType struct {
 }
 
 var (
+	ShowVersion  bool
 	Mode         modeType
 	TemplateFile templateFileType
 	OutDir       outDirType
@@ -103,19 +106,27 @@ func (t *dataFileType) Init() error {
 
 func InitUsage() {
 	usageTemplateFile := `Template file that contains patterns to be replaced by excel data:
-    [COLUMN]: Replaces with the content of the corresponding column from excel data
-        For example: [A] replaces with the data of cell "A" of current row
-    Patterns can be escaped by adding ":" after "["
-        For example: [:A] generates [A]
+[COLUMN]:
+    Replaces with the content of corresponding column from excel data
+    For example:
+    [A] replaces with the data of cell "A" of current row
+Patterns can be escaped by adding ":" after "["
+    For example:
+    [:A] generates [A]
 `
 
 	usageOutFileName := `Output file name that contains special patterns:
-    [0000]: Generates auto increment number padded to the specified zeros
-        For example: [00].txt generates: 00.txt, 01.txt, 02.txt, 03.txt, ...
-    [COLUMN]: Replaces with the content of the corresponding column from excel data
-        For example: [A].txt replaces [A] with the data of cell "A" of current row
-    Patterns can be escaped by adding ":" after "["
-        For example: [:00].txt generates [00].txt
+[0000]:
+    Generates auto increment number padded to the specified zeros
+    For example:
+    [00].txt generates: 00.txt, 01.txt, 02.txt, 03.txt, ...
+[COLUMN]:
+    Replaces with the content of corresponding column from excel data
+    For example:
+    [A].txt replaces [A] with the data of cell "A" of current row
+Patterns can be escaped by adding ":" after "["
+    For example:
+    [:00].txt generates [00].txt
 `
 
 	Mode.Set(flag.Bool("c", false, "Run in CLI mode and do not open GUI"))
@@ -123,5 +134,13 @@ func InitUsage() {
 	OutDir.Set(flag.String("o", "out", "Output directory"))
 	OutFileName.Set(flag.String("f", "[0000].txt", usageOutFileName))
 	DataFile.Set(flag.String("d", "", "Excel data file"))
+
+	v := flag.Bool("v", false, "Version number")
+
 	flag.Parse()
+
+	if *v {
+		fmt.Printf("Version: %v\n", VERSION)
+		os.Exit(0)
+	}
 }

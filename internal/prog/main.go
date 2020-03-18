@@ -13,7 +13,9 @@ import (
 	"github.com/tealeg/xlsx"
 )
 
-const sheetIndex = 0
+const SHEET_INDEX = 0
+
+const VERSION = "1.0.0"
 
 const (
 	TOKEN_TYPE_Cell = iota
@@ -142,7 +144,7 @@ func processExcelFile() error {
 		return errors.New("The excel file is empty.")
 	}
 
-	sheet := dataFile.Sheets[sheetIndex]
+	sheet := dataFile.Sheets[SHEET_INDEX]
 
 	for _, row := range sheet.Rows {
 		if row != nil {
