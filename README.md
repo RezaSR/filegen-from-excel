@@ -1,5 +1,5 @@
 # filegen-from-excel
-Generate text files from Excel data based on a template.
+Generate text files from each row of Excel data based on a template.
 
 ## Limitations
 - Currently only works with .xlsx Excel files
