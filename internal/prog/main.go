@@ -15,8 +15,6 @@ import (
 
 const SHEET_INDEX = 0
 
-const VERSION = "1.0.0"
-
 const (
 	TOKEN_TYPE_Cell = iota
 	TOKEN_TYPE_COUNTER
