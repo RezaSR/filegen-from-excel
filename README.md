@@ -1,6 +1,12 @@
 # filegen-from-excel
 Generate text files from Excel data based on a template.
 
+## Limitations
+- Currently only works with .xlsx Excel files
+
+## Building
+Consult scripts/cross-compile.sh to compile binaries yourself.
+
 ## Usage
 Run the program with -h option to view usage:
 
