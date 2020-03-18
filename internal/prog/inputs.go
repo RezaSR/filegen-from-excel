@@ -112,8 +112,7 @@ func InitUsage() {
     [A] replaces with the data of cell "A" of current row
 Patterns can be escaped by adding ":" after "["
     For example:
-    [:A] generates [A]
-`
+    [:A] generates [A]`
 
 	usageOutFileName := `Output file name that contains special patterns:
 [0000]:
@@ -126,13 +125,12 @@ Patterns can be escaped by adding ":" after "["
     [A].txt replaces [A] with the data of cell "A" of current row
 Patterns can be escaped by adding ":" after "["
     For example:
-    [:00].txt generates [00].txt
-`
+    [:00].txt generates [00].txt`
 
 	Mode.Set(flag.Bool("c", false, "Run in CLI mode and do not open GUI"))
 	TemplateFile.Set(flag.String("t", "", usageTemplateFile))
 	OutDir.Set(flag.String("o", "out", "Output directory"))
-	OutFileName.Set(flag.String("f", "[0000].txt", usageOutFileName))
+	OutFileName.Set(flag.String("f", "[0000].txt", usageOutFileName+"\n"))
 	DataFile.Set(flag.String("d", "", "Excel data file"))
 
 	v := flag.Bool("v", false, "Version number")
