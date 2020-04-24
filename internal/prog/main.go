@@ -5,7 +5,6 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
-	"os"
 	"path/filepath"
 	"regexp"
 	"strings"
@@ -26,6 +25,8 @@ type outFileNameTokenInfo struct {
 }
 
 var (
+	ExePath            string
+	WorkingDir         string
 	templateContent    []byte
 	templateTokens     map[int][]byte
 	outFileNameTokens  map[string]outFileNameTokenInfo
@@ -188,42 +189,6 @@ func processExcelFile() error {
 				return err
 			}
 		}
-	}
-
-	return nil
-}
-
-func normalizePath(path string) string {
-	path = strings.ReplaceAll(path, "\\", "/")
-	return filepath.FromSlash(path)
-}
-
-func fileExists(path string) error {
-	info, err := os.Stat(path)
-	if err != nil {
-		return err
-	}
-
-	if info.IsDir() {
-		return fmt.Errorf("Path %q is not a file.", path)
-	}
-
-	return nil
-}
-
-func dirExists(path string, create bool) error {
-	info, err := os.Stat(path)
-	if err != nil {
-		if create {
-			err = os.MkdirAll(path, 0755)
-			if err != nil {
-				return err
-			}
-		} else {
-			return err
-		}
-	} else if !info.IsDir() {
-		return fmt.Errorf("Path %q is not a directory.", path)
 	}
 
 	return nil
