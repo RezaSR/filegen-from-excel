@@ -105,29 +105,31 @@ func (t *dataFileType) Init() error {
 	return FileExists(t.Name())
 }
 
+const (
+	UsageTemplateFile = `Template file that contains patterns to be replaced by excel data:
+	[COLUMN]:
+		Replaces with the content of corresponding column from excel data
+		For example:
+		[A] replaces with the data of cell "A" of current row
+	Patterns can be escaped by adding ":" after "["
+		For example:
+		[:A] generates [A]`
+
+	UsageOutFileName = `Output file name that contains special patterns:
+	[0000]:
+		Generates auto increment number padded to the specified zeros
+		For example:
+		[00].txt generates: 00.txt, 01.txt, 02.txt, 03.txt, ...
+	[COLUMN]:
+		Replaces with the content of corresponding column from excel data
+		For example:
+		[A].txt replaces [A] with the data of cell "A" of current row
+	Patterns can be escaped by adding ":" after "["
+		For example:
+		[:00].txt generates [00].txt`
+)
+
 func InitUsage() {
-	usageTemplateFile := `Template file that contains patterns to be replaced by excel data:
-[COLUMN]:
-    Replaces with the content of corresponding column from excel data
-    For example:
-    [A] replaces with the data of cell "A" of current row
-Patterns can be escaped by adding ":" after "["
-    For example:
-    [:A] generates [A]`
-
-	usageOutFileName := `Output file name that contains special patterns:
-[0000]:
-    Generates auto increment number padded to the specified zeros
-    For example:
-    [00].txt generates: 00.txt, 01.txt, 02.txt, 03.txt, ...
-[COLUMN]:
-    Replaces with the content of corresponding column from excel data
-    For example:
-    [A].txt replaces [A] with the data of cell "A" of current row
-Patterns can be escaped by adding ":" after "["
-    For example:
-    [:00].txt generates [00].txt`
-
 	defaultOutDir := "filegen_out"
 	homeDir, err := os.UserHomeDir()
 	if err != nil {

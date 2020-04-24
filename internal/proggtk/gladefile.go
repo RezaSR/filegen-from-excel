@@ -1,0 +1,5 @@
+package proggtk
+
+const (
+	gladeStr = ``
+)
