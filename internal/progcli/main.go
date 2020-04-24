@@ -12,10 +12,5 @@ func Main() error {
 
 	fmt.Println("Number of generated files: " + strconv.Itoa(n))
 
-	if err != nil {
-		fmt.Println(err)
-		return nil
-	}
-
-	return nil
+	return err
 }

@@ -61,22 +61,22 @@ func Main() (int, error) {
 func validateInputs() error {
 	var errs []string
 
-	err := TemplateFile.Init()
+	err := DataFile.Validate()
 	if err != nil {
 		errs = append(errs, err.Error())
 	}
 
-	err = OutDir.Init()
+	err = TemplateFile.Validate()
 	if err != nil {
 		errs = append(errs, err.Error())
 	}
 
-	err = OutFileName.Init()
+	err = OutDir.Validate()
 	if err != nil {
 		errs = append(errs, err.Error())
 	}
 
-	err = DataFile.Init()
+	err = OutFileName.Validate()
 	if err != nil {
 		errs = append(errs, err.Error())
 	}

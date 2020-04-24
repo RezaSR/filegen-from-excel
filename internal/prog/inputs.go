@@ -38,7 +38,10 @@ var (
 )
 
 // Methods of modeType
-func (t *modeType) Set(isCli *bool) {
+func (t *modeType) Set(isCli bool) {
+	*t.isCli = isCli
+}
+func (t *modeType) SetP(isCli *bool) {
 	t.isCli = isCli
 }
 func (t *modeType) IsCli() bool {
@@ -48,14 +51,35 @@ func (t *modeType) Init() error {
 	return nil
 }
 
+// Methods of dataFileType
+func (t *dataFileType) Set(name string) {
+	*t.name = name
+}
+func (t *dataFileType) SetP(name *string) {
+	t.name = name
+}
+func (t *dataFileType) Name() string {
+	return *t.name
+}
+func (t *dataFileType) Validate() error {
+	if len(*t.name) == 0 {
+		return errors.New("Excel data file is not specified.")
+	}
+	*t.name = NormalizePath(*t.name)
+	return FileExists(t.Name())
+}
+
 // Methods of templateFileType
-func (t *templateFileType) Set(name *string) {
+func (t *templateFileType) Set(name string) {
+	*t.name = name
+}
+func (t *templateFileType) SetP(name *string) {
 	t.name = name
 }
 func (t *templateFileType) Name() string {
 	return *t.name
 }
-func (t *templateFileType) Init() error {
+func (t *templateFileType) Validate() error {
 	if len(*t.name) == 0 {
 		return errors.New("Template file is not specified.")
 	}
@@ -64,25 +88,31 @@ func (t *templateFileType) Init() error {
 }
 
 // Methods of outDirType
-func (t *outDirType) Set(name *string) {
+func (t *outDirType) Set(name string) {
+	*t.name = name
+}
+func (t *outDirType) SetP(name *string) {
 	t.name = name
 }
 func (t *outDirType) Name() string {
 	return *t.name
 }
-func (t *outDirType) Init() error {
+func (t *outDirType) Validate() error {
 	*t.name = NormalizePath(*t.name)
 	return DirExists(t.Name(), true)
 }
 
 // Methods of outFileNameType
-func (t *outFileNameType) Set(name *string) {
+func (t *outFileNameType) Set(name string) {
+	*t.name = name
+}
+func (t *outFileNameType) SetP(name *string) {
 	t.name = name
 }
 func (t *outFileNameType) Name() string {
 	return *t.name
 }
-func (t *outFileNameType) Init() error {
+func (t *outFileNameType) Validate() error {
 	if len(*t.name) == 0 {
 		return errors.New("Output file name is not specified.")
 	}
@@ -90,57 +120,42 @@ func (t *outFileNameType) Init() error {
 	return nil
 }
 
-// Methods of dataFileType
-func (t *dataFileType) Set(name *string) {
-	t.name = name
-}
-func (t *dataFileType) Name() string {
-	return *t.name
-}
-func (t *dataFileType) Init() error {
-	if len(*t.name) == 0 {
-		return errors.New("Excel data file is not specified.")
-	}
-	*t.name = NormalizePath(*t.name)
-	return FileExists(t.Name())
-}
-
-const (
+var (
 	UsageTemplateFile = `Template file that contains patterns to be replaced by excel data:
-	[COLUMN]:
-		Replaces with the content of corresponding column from excel data
-		For example:
-		[A] replaces with the data of cell "A" of current row
-	Patterns can be escaped by adding ":" after "["
-		For example:
-		[:A] generates [A]`
-
+[COLUMN]:
+    Replaces with the content of corresponding column from excel data
+    For example:
+    [A] replaces with the data of cell "A" of current row
+Patterns can be escaped by adding ":" after "["
+    For example:
+    [:A] generates [A]`
 	UsageOutFileName = `Output file name that contains special patterns:
-	[0000]:
-		Generates auto increment number padded to the specified zeros
-		For example:
-		[00].txt generates: 00.txt, 01.txt, 02.txt, 03.txt, ...
-	[COLUMN]:
-		Replaces with the content of corresponding column from excel data
-		For example:
-		[A].txt replaces [A] with the data of cell "A" of current row
-	Patterns can be escaped by adding ":" after "["
-		For example:
-		[:00].txt generates [00].txt`
+[0000]:
+    Generates auto increment number padded to the specified zeros
+    For example:
+    [00].txt generates: 00.txt, 01.txt, 02.txt, 03.txt, ...
+[COLUMN]:
+    Replaces with the content of corresponding column from excel data
+    For example:
+    [A].txt replaces [A] with the data of cell "A" of current row
+Patterns can be escaped by adding ":" after "["
+    For example:
+    [:00].txt generates [00].txt`
+	DefaultOutFileName = "[0000].txt"
 )
 
 func InitUsage() {
 	defaultOutDir := "filegen_out"
 	homeDir, err := os.UserHomeDir()
-	if err != nil {
+	if err == nil {
 		defaultOutDir = filepath.Clean(homeDir + "/Documents/" + defaultOutDir)
 	}
 
-	Mode.Set(flag.Bool("c", false, "Run in CLI mode and do not open GUI"))
-	DataFile.Set(flag.String("d", "", "Excel data file"))
-	TemplateFile.Set(flag.String("t", "", usageTemplateFile))
-	OutDir.Set(flag.String("o", defaultOutDir, "Output directory"))
-	OutFileName.Set(flag.String("f", "[0000].txt", usageOutFileName+"\n"))
+	Mode.SetP(flag.Bool("c", false, "Run in CLI mode and do not open GUI"))
+	DataFile.SetP(flag.String("d", "", "Excel data file"))
+	TemplateFile.SetP(flag.String("t", "", UsageTemplateFile))
+	OutDir.SetP(flag.String("o", defaultOutDir, "Output directory"))
+	OutFileName.SetP(flag.String("f", DefaultOutFileName, UsageOutFileName+"\n"))
 
 	v := flag.Bool("v", false, "Version number")
 

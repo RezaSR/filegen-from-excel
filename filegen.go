@@ -9,6 +9,7 @@ import (
 
 	"github.com/rezasr/filegen-from-excel/internal/prog"
 	"github.com/rezasr/filegen-from-excel/internal/progcli"
+	"github.com/rezasr/filegen-from-excel/internal/proggtk"
 )
 
 func init() {
@@ -21,7 +22,12 @@ func init() {
 }
 
 func main() {
-	if prog.Mode.IsCli() {
+	if !prog.Mode.IsCli() {
+		err := proggtk.Main()
+		if err != nil {
+			fmt.Println(err)
+		}
+	} else {
 		err := progcli.Main()
 		if err != nil {
 			fmt.Println(err)

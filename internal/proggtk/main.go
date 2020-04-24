@@ -8,17 +8,70 @@ import (
 	"github.com/rezasr/filegen-from-excel/internal/prog"
 )
 
+var (
+	bldr *gtk.Builder
+
+	signals = map[string]interface{}{
+		"Btn_HelpTemplateFile_clk": btn_HelpTemplateFile_Clicked,
+		"Btn_HelpOutFileName_clk":  btn_HelpOutFileName_Clicked,
+		"Btn_Generate_clk":         btn_Generate_Clicked,
+	}
+)
+
 func Main() error {
+	var err error
+
 	gtk.Init(nil)
 
-	n, err := prog.Main()
-
-	fmt.Println("Number of generated files: " + strconv.Itoa(n))
-
+	bldr, err = gtk.BuilderNew()
 	if err != nil {
-		fmt.Println(err)
-		return nil
+		return err
 	}
 
+	err = bldr.AddFromString(gladeStr)
+	if err != nil {
+		return err
+	}
+
+	err = initObjects()
+	if err != nil {
+		return err
+	}
+
+	bldr.ConnectSignals(signals)
+
+	appWindow_Main.ShowAll()
+	gtk.Main()
+
 	return nil
+}
+
+func initVars() error {
+	return nil
+}
+
+func btn_HelpTemplateFile_Clicked() {
+
+}
+
+func btn_HelpOutFileName_Clicked() {
+
+}
+
+func btn_Generate_Clicked() {
+	prog.DataFile.Set(fileBtn_DataFile.GetFilename())
+	prog.TemplateFile.Set(fileBtn_TemplateFile.GetFilename())
+	prog.OutDir.Set(fileBtn_OutDir.GetFilename())
+	str, err := entry_OutFileName.GetText()
+	if err == nil {
+		prog.OutFileName.Set(str)
+	} else {
+		prog.OutFileName.Set(prog.DefaultOutFileName)
+	}
+
+	n, err := prog.Main()
+	fmt.Println("Number of generated files: " + strconv.Itoa(n))
+	if err != nil {
+		fmt.Println(err)
+	}
 }
