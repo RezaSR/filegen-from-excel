@@ -15,6 +15,7 @@ var (
 		"Btn_HelpTemplateFile_clk": btn_HelpTemplateFile_Clicked,
 		"Btn_HelpOutFileName_clk":  btn_HelpOutFileName_Clicked,
 		"Btn_Generate_clk":         btn_Generate_Clicked,
+		"Btn_DialogMain_clk":       btn_DialogMain_Clicked,
 	}
 )
 
@@ -50,12 +51,19 @@ func initVars() error {
 	return nil
 }
 
-func btn_HelpTemplateFile_Clicked() {
+func showDialog(title, header, text string) {
+	dialog_Main.SetTitle(title)
+	lbl_DialogMainHeader.SetText(header)
+	lbl_DialogMainText.SetText(text)
+	dialog_Main.Show()
+}
 
+func btn_HelpTemplateFile_Clicked() {
+	showDialog("Help", "Template File", prog.UsageTemplateFile)
 }
 
 func btn_HelpOutFileName_Clicked() {
-
+	showDialog("Help", "Output File Name", prog.UsageOutFileName)
 }
 
 func btn_Generate_Clicked() {
@@ -74,4 +82,8 @@ func btn_Generate_Clicked() {
 	if err != nil {
 		fmt.Println(err)
 	}
+}
+
+func btn_DialogMain_Clicked() {
+	dialog_Main.Hide()
 }

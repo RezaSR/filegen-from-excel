@@ -10,6 +10,9 @@ var (
 	fileBtn_TemplateFile *gtk.FileChooserButton
 	fileBtn_OutDir       *gtk.FileChooserButton
 	entry_OutFileName    *gtk.Entry
+	dialog_Main          *gtk.Dialog
+	lbl_DialogMainHeader *gtk.Label
+	lbl_DialogMainText   *gtk.Label
 )
 
 func initObjects() error {
@@ -59,6 +62,31 @@ func initObjects() error {
 		return err
 	}
 	entry_OutFileName, ok = obj.(*gtk.Entry)
+	if !ok {
+		return err
+	}
+
+	obj, err = bldr.GetObject("Dialog_Main")
+	if err != nil {
+		return err
+	}
+	dialog_Main, ok = obj.(*gtk.Dialog)
+	if !ok {
+		return err
+	}
+	obj, err = bldr.GetObject("Lbl_DialogMainHeader")
+	if err != nil {
+		return err
+	}
+	lbl_DialogMainHeader, ok = obj.(*gtk.Label)
+	if !ok {
+		return err
+	}
+	obj, err = bldr.GetObject("Lbl_DialogMainText")
+	if err != nil {
+		return err
+	}
+	lbl_DialogMainText, ok = obj.(*gtk.Label)
 	if !ok {
 		return err
 	}
