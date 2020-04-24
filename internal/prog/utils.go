@@ -9,7 +9,7 @@ import (
 
 func NormalizePath(path string) string {
 	path = strings.ReplaceAll(path, "\\", "/")
-	return filepath.FromSlash(path)
+	return filepath.Clean(path)
 }
 
 func FileExists(path string) error {

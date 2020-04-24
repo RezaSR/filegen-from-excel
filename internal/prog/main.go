@@ -25,8 +25,9 @@ type outFileNameTokenInfo struct {
 }
 
 var (
-	ExePath            string
-	WorkingDir         string
+	ExePath    string
+	WorkingDir string
+
 	templateContent    []byte
 	templateTokens     map[int][]byte
 	outFileNameTokens  map[string]outFileNameTokenInfo

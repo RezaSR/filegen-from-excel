@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"path/filepath"
 )
 
 type modeType struct {
@@ -127,10 +128,16 @@ Patterns can be escaped by adding ":" after "["
     For example:
     [:00].txt generates [00].txt`
 
+	defaultOutDir := "filegen_out"
+	homeDir, err := os.UserHomeDir()
+	if err != nil {
+		defaultOutDir = filepath.Clean(homeDir + "/Documents/" + defaultOutDir)
+	}
+
 	Mode.Set(flag.Bool("c", false, "Run in CLI mode and do not open GUI"))
 	DataFile.Set(flag.String("d", "", "Excel data file"))
 	TemplateFile.Set(flag.String("t", "", usageTemplateFile))
-	OutDir.Set(flag.String("o", "out", "Output directory"))
+	OutDir.Set(flag.String("o", defaultOutDir, "Output directory"))
 	OutFileName.Set(flag.String("f", "[0000].txt", usageOutFileName+"\n"))
 
 	v := flag.Bool("v", false, "Version number")
