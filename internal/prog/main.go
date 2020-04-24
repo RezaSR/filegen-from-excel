@@ -34,28 +34,28 @@ var (
 	outFileNameCounter int = 0
 )
 
-func Main() error {
+func Main() (int, error) {
 	err := validateInputs()
 	if err != nil {
-		return err
+		return 0, err
 	}
 
 	err = parseTemplateFile()
 	if err != nil {
-		return err
+		return 0, err
 	}
 
 	err = parseOutFileName()
 	if err != nil {
-		return err
+		return 0, err
 	}
 
-	err = processExcelFile()
+	n, err := processExcelFile()
 	if err != nil {
-		return err
+		return n, err
 	}
 
-	return nil
+	return n, nil
 }
 
 func validateInputs() error {
@@ -133,19 +133,20 @@ func parseOutFileName() error {
 	return nil
 }
 
-func processExcelFile() error {
+func processExcelFile() (int, error) {
 	dataFile, err := xlsx.OpenFile(DataFile.Name())
 	if err != nil {
-		return err
+		return 0, err
 	}
 
 	sheetLen := len(dataFile.Sheets)
 	if sheetLen == 0 {
-		return errors.New("The excel file is empty.")
+		return 0, errors.New("The excel file is empty.")
 	}
 
 	sheet := dataFile.Sheets[SHEET_INDEX]
 
+	numOfGenerated := 0
 	for _, row := range sheet.Rows {
 		if row != nil {
 			fileContent := templateContent
@@ -186,11 +187,13 @@ func processExcelFile() error {
 			}
 
 			err = ioutil.WriteFile(filepath.Join(OutDir.Name(), fileName), fileContent, 0644)
-			if err != nil {
-				return err
+			if err == nil {
+				numOfGenerated++
+			} else {
+				return numOfGenerated, err
 			}
 		}
 	}
 
-	return nil
+	return numOfGenerated, nil
 }
