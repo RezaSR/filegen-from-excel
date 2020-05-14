@@ -142,19 +142,19 @@ Patterns can be escaped by adding ":" after "["
     For example:
     [:00].txt generates [00].txt`
 	DefaultOutFileName = "[0000].txt"
+	DefaultOutDir      = "filegen_out"
 )
 
 func InitUsage() {
-	defaultOutDir := "filegen_out"
 	homeDir, err := os.UserHomeDir()
 	if err == nil {
-		defaultOutDir = filepath.Clean(homeDir + "/Documents/" + defaultOutDir)
+		DefaultOutDir = filepath.Clean(homeDir + "/Documents/" + DefaultOutDir)
 	}
 
 	Mode.SetP(flag.Bool("c", false, "Run in CLI mode and do not open GUI"))
 	DataFile.SetP(flag.String("d", "", "Excel data file"))
 	TemplateFile.SetP(flag.String("t", "", UsageTemplateFile))
-	OutDir.SetP(flag.String("o", defaultOutDir, "Output directory"))
+	OutDir.SetP(flag.String("o", DefaultOutDir, "Output directory"))
 	OutFileName.SetP(flag.String("f", DefaultOutFileName, UsageOutFileName+"\n"))
 
 	v := flag.Bool("v", false, "Version number")

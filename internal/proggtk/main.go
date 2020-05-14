@@ -39,6 +39,8 @@ func Main() error {
 		return err
 	}
 
+	initVars()
+
 	bldr.ConnectSignals(signals)
 
 	appWindow_Main.ShowAll()
@@ -48,6 +50,14 @@ func Main() error {
 }
 
 func initVars() error {
+	outDirPath := prog.NormalizePath(prog.DefaultOutDir)
+	err := prog.DirExists(outDirPath, true)
+	if err == nil {
+		fileBtn_OutDir.SetFilename(outDirPath)
+	}
+
+	entry_OutFileName.SetText(prog.DefaultOutFileName)
+
 	return nil
 }
 
