@@ -1,7 +1,6 @@
 package proggtk
 
 import (
-	"fmt"
 	"strconv"
 
 	"github.com/gotk3/gotk3/gtk"
@@ -88,9 +87,10 @@ func btn_Generate_Clicked() {
 	}
 
 	n, err := prog.Main()
-	fmt.Println("Number of generated files: " + strconv.Itoa(n))
-	if err != nil {
-		fmt.Println(err)
+	if err == nil {
+		showDialog("Success", "File generation was successful", "Number of generated files: "+strconv.Itoa(n))
+	} else {
+		showDialog("Error", "Error generating files:", err.Error())
 	}
 }
 

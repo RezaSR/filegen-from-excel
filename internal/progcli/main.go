@@ -9,8 +9,11 @@ import (
 
 func Main() error {
 	n, err := prog.Main()
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		fmt.Println("Number of generated files: " + strconv.Itoa(n))
+	}
 
-	fmt.Println("Number of generated files: " + strconv.Itoa(n))
-
-	return err
+	return nil
 }

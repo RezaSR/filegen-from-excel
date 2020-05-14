@@ -63,22 +63,22 @@ func validateInputs() error {
 
 	err := DataFile.Validate()
 	if err != nil {
-		errs = append(errs, err.Error())
+		errs = append(errs, "- "+err.Error())
 	}
 
 	err = TemplateFile.Validate()
 	if err != nil {
-		errs = append(errs, err.Error())
+		errs = append(errs, "- "+err.Error())
 	}
 
 	err = OutDir.Validate()
 	if err != nil {
-		errs = append(errs, err.Error())
+		errs = append(errs, "- "+err.Error())
 	}
 
 	err = OutFileName.Validate()
 	if err != nil {
-		errs = append(errs, err.Error())
+		errs = append(errs, "- "+err.Error())
 	}
 
 	if len(errs) > 0 {
