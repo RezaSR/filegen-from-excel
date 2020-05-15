@@ -16,3 +16,9 @@
 
 # Temporary glade file
 *.glade~
+
+# Output of build script
+bin
+
+# VS Code files
+.vscode
