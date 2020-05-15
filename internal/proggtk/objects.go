@@ -2,6 +2,7 @@ package proggtk
 
 import (
 	"github.com/gotk3/gotk3/gtk"
+	"github.com/rezasr/filegen-from-excel/internal/prog"
 )
 
 var (
@@ -13,6 +14,7 @@ var (
 	dialog_Main          *gtk.Dialog
 	lbl_DialogMainHeader *gtk.Label
 	lbl_DialogMainText   *gtk.Label
+	aboutDialog_Main     *gtk.AboutDialog
 )
 
 func initObjects() error {
@@ -91,5 +93,14 @@ func initObjects() error {
 		return err
 	}
 
+	obj, err = bldr.GetObject("AboutDialog_Main")
+	if err != nil {
+		return err
+	}
+	aboutDialog_Main, ok = obj.(*gtk.AboutDialog)
+	if !ok {
+		return err
+	}
+	aboutDialog_Main.SetVersion("Version: " + prog.VERSION)
 	return nil
 }

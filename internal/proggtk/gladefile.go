@@ -50,6 +50,8 @@ const (
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
+                        <property name="always_show_image">True</property>
+                        <signal name="activate" handler="Menu_Quit_act" swapped="no"/>
                       </object>
                     </child>
                   </object>
@@ -73,6 +75,8 @@ const (
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
+                        <property name="always_show_image">True</property>
+                        <signal name="activate" handler="Menu_About_act" swapped="no"/>
                       </object>
                     </child>
                   </object>
@@ -264,6 +268,51 @@ const (
             <property name="fill">True</property>
             <property name="position">1</property>
           </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkAboutDialog" id="AboutDialog_Main">
+    <property name="can_focus">False</property>
+    <property name="window_position">center-on-parent</property>
+    <property name="type_hint">dialog</property>
+    <property name="gravity">center</property>
+    <property name="transient_for">AppWindow_Main</property>
+    <property name="program_name">FileGen From Excel</property>
+    <property name="copyright" translatable="yes">rsr_reza@yahoo.com</property>
+    <property name="comments" translatable="yes">Generate text files from each row of Excel data based on a template.</property>
+    <property name="website">https://github.com/RezaSR/filegen-from-excel</property>
+    <property name="website_label" translatable="yes">View on Github</property>
+    <property name="authors">Reza Saberi Rad &lt;rsr_reza@yahoo.com&gt;</property>
+    <property name="logo_icon_name">emblem-documents</property>
+    <property name="license_type">mit-x11</property>
+    <child type="titlebar">
+      <placeholder/>
+    </child>
+    <child internal-child="vbox">
+      <object class="GtkBox">
+        <property name="can_focus">False</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">2</property>
+        <child internal-child="action_area">
+          <object class="GtkButtonBox">
+            <property name="can_focus">False</property>
+            <property name="layout_style">end</property>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <placeholder/>
         </child>
       </object>
     </child>

@@ -15,6 +15,8 @@ var (
 		"Btn_HelpOutFileName_clk":  btn_HelpOutFileName_Clicked,
 		"Btn_Generate_clk":         btn_Generate_Clicked,
 		"Btn_DialogMain_clk":       btn_DialogMain_Clicked,
+		"Menu_Quit_act":            menu_Quit_Activated,
+		"Menu_About_act":           menu_About_Activated,
 	}
 )
 
@@ -96,4 +98,12 @@ func btn_Generate_Clicked() {
 
 func btn_DialogMain_Clicked() {
 	dialog_Main.Hide()
+}
+
+func menu_Quit_Activated() {
+	gtk.MainQuit()
+}
+
+func menu_About_Activated() {
+	aboutDialog_Main.Show()
 }
