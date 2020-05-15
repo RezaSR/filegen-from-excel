@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"runtime"
 )
 
 type modeType struct {
@@ -151,18 +152,28 @@ func InitUsage() {
 		DefaultOutDir = filepath.Clean(homeDir + "/Documents/" + DefaultOutDir)
 	}
 
-	Mode.SetP(flag.Bool("c", false, "Run in CLI mode and do not open GUI"))
-	DataFile.SetP(flag.String("d", "", "Excel data file"))
-	TemplateFile.SetP(flag.String("t", "", UsageTemplateFile))
-	OutDir.SetP(flag.String("o", DefaultOutDir, "Output directory"))
-	OutFileName.SetP(flag.String("f", DefaultOutFileName, UsageOutFileName+"\n"))
+	isWindowsGui := false
+	if runtime.GOOS == "windows" {
+		isWinCli := isWindowsCli()
+		Mode.SetP(&isWinCli)
+		isWindowsGui = !isWinCli
+	} else {
+		Mode.SetP(flag.Bool("c", false, "Run in CLI mode and do not open GUI"))
+	}
 
-	v := flag.Bool("v", false, "Version number")
+	if !isWindowsGui {
+		DataFile.SetP(flag.String("d", "", "Excel data file"))
+		TemplateFile.SetP(flag.String("t", "", UsageTemplateFile))
+		OutDir.SetP(flag.String("o", DefaultOutDir, "Output directory"))
+		OutFileName.SetP(flag.String("f", DefaultOutFileName, UsageOutFileName+"\n"))
 
-	flag.Parse()
+		v := flag.Bool("v", false, "Version number")
 
-	if *v {
-		fmt.Printf("Version: %v\n", VERSION)
-		os.Exit(0)
+		flag.Parse()
+
+		if *v {
+			fmt.Printf("Version: %v\n", VERSION)
+			os.Exit(0)
+		}
 	}
 }
