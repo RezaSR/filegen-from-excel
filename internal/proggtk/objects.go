@@ -76,6 +76,7 @@ func initObjects() error {
 	if !ok {
 		return err
 	}
+	dialog_Main.HideOnDelete()
 	obj, err = bldr.GetObject("Lbl_DialogMainHeader")
 	if err != nil {
 		return err
@@ -102,5 +103,10 @@ func initObjects() error {
 		return err
 	}
 	aboutDialog_Main.SetVersion("Version: " + prog.VERSION)
+	aboutDialog_Main.HideOnDelete()
+	aboutDialog_Main.Connect("response", func() {
+		aboutDialog_Main.Hide()
+	})
+
 	return nil
 }

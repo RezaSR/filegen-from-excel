@@ -16,6 +16,7 @@
   </object>
   <object class="GtkApplicationWindow" id="AppWindow_Main">
     <property name="can_focus">False</property>
+    <property name="title" translatable="yes">FileGen from Excel</property>
     <child type="titlebar">
       <placeholder/>
     </child>
@@ -275,7 +276,7 @@
     <property name="type_hint">dialog</property>
     <property name="gravity">center</property>
     <property name="transient_for">AppWindow_Main</property>
-    <property name="program_name">FileGen From Excel</property>
+    <property name="program_name">FileGen from Excel</property>
     <property name="copyright" translatable="yes">rsr_reza@yahoo.com</property>
     <property name="comments" translatable="yes">Generate text files from each row of Excel data based on a template.</property>
     <property name="website">https://github.com/RezaSR/filegen-from-excel</property>
